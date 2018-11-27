@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Optic</title>
+<link rel="stylesheet" href="../static/style.css" type="text/css">
+<script src="../static/amcharts.js" type="text/javascript"></script>
+<script src="../static/serial.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    chartData = [];
+    var i = 0;
+    {%  for index in datas %}
+        chartData.push({times:i,psk:{{index|safe}}})
+        i++;
+    {% endfor %}
+{#    {% if datas %}#}
+{#    chartData = [{times:"0mins",psk:{{datas[0]|safe}}},#}
+{#        {times:"1mins",psk:{{datas[1]|safe}}},#}
+{#        {times:"2mins",psk:{{datas[2]|safe}}},#}
+{#        {times:"3mins",psk:{{datas[3]|safe}}},#}
+{#        {times:"4mins",psk:{{datas[4]|safe}}},#}
+{#        {times:"5mins",psk:{{datas[5]|safe}}},#}
+{#        {times:"6mins",psk:{{datas[6]|safe}}},#}
+{#        {times:"7mins",psk:{{datas[7]|safe}}},#}
+{#        {times:"8mins",psk:{{datas[8]|safe}}},#}
+{#        {times:"9mins",psk:{{datas[9]|safe}}},#}
+{#        {times:"10mins",psk:{{datas[10]|safe}}},#}
+{#        {times:"11mins",psk:{{datas[11]|safe}}},#}
+{#        {times:"12mins",psk:{{datas[12]|safe}}},#}
+{#        {times:"13mins",psk:{{datas[13]|safe}}},#}
+{#        {times:"14mins",psk:{{datas[14]|safe}}},#}
+{#        {times:"15mins",psk:{{datas[15]|safe}}},#}
+{#        {times:"16mins",psk:{{datas[16]|safe}}},#}
+{#        {times:"17mins",psk:{{datas[17]|safe}}},#}
+{#        {times:"18mins",psk:{{datas[18]|safe}}},#}
+{#        {times:"19mins",psk:{{datas[19]|safe}}},#}
+{#        {times:"20mins",psk:{{datas[20]|safe}}},#}
+{#        ]#}
+{#    {% else %}#}
+{#        chartData = [{times:"0mins",psk:0}]#}
+{#    {% endif %}#}
+	AmCharts.makeChart("chartdiv",
+        {
+	    type:"serial",
+	    dataProvider:chartData,
+	    categoryField:"times",
+	    graphs:
+            [{
+	            valueField:"psk",
+	            lineColor:"#0a15cc",
+                dashLength:3,
+                bullet:"round",
+            }],
+        valueAxes: [{
+            stackType: "regular",
+            gridAlpha: 0.07,
+            title: "{{ selected_mode|safe }}"
+        }]
+	})
+</script>
+</head>
+
+<body background="../static/bkPhoto2.jpg">
+	<div id="chartdiv" style="width:100%;height:600px"></div>
+    <hr style="height:3px;border:none;border-top:3px double red;" />
+    <h1 align="center" style="font-family: 'Times New Roman';color: darkred">Welcome to join Optorun Data Visualization Assistant</h1>
+    <br>
+
+    <form action="machine_no" method = 'post'>
+        查看所有Machine No/装置番号：
+        <input type="submit" value="进入"/>
+    </form>
+    <form action="mode_file" method = 'post'>
+        下载excel模板文件：
+        <input type="submit" value="点击下载"/>
+    </form>
+    <table border="2" align="center">
+        <tr>
+
+{# 第一列#}
+            <th>
+                <form method="post" action="mode_1" name="form_1">
+                    <h4>模式一</h4>
+
+                        <p align="left">请选择镀膜机类型：
+                            <select style="width:180px;" name="coater">
+                                <option>GENER-1300</option>
+                                <option>OTFC-1300D/C</option>
+                                <option>OTFC-1300D(特)</option>
+                                <option>OTFC-1550D/C</option>
+                                <option>OTFC-1800D</option>
+                                <option>OTFC-1800C</option>
+                                <option>AR-1300D</option>
+                                <option>OTFC-900D</option>
+                                <option>OTFC-1100DA/CA</option>
+                                <option>OTFC-1100DB/CB</option>
+                                <option>OTFC-600C(S014)</option>
+                                <option>LED-600</option>
+                                <option>STAR-1300</option>
+                                <option>OTFC-2350</option>
+                                <option>MTFC-900CAI</option>
+                             </select>
+                        </p>
+                        <p align="left">模式选择：
+                            <select name="test_mode">
+                                <option>抽速（室温）</option>
+                                <option>抽速（150℃）</option>
+                                <option>漏率</option>
+                            </select>
+                        </p>
+                        <p align="left">请选择日期范围：
+                            <input type="date" name="date_1">
+                            <input type="date" name="date_2">
+                            <input type="submit" value="查询"></p>
+                    </form>
+            </th>
+
+{# 第二列 #}
+            <th>
+                <h4>模式二</h4>
+                    <form method="post" action="mode_2" name="form_2">
+                         <p align="left">Machine No/装置番号:
+                             <input type="text" name = "machineNo" />
+                        </p>
+                        <p align="left">模式选择：
+                            <select name="test_mode">
+                                <option>抽速（室温）</option>
+                                <option>抽速（150℃）</option>
+                                <option>漏率</option>
+                            </select>
+                            <input type="submit" name="submit" value="查询"/>
+                         </p>
+                    </form>
+            </th>
+{#第三列#}
+            <th>
+                <h4>数据上传</h4>
+                <form action="update_file" enctype="multipart/form-data" method="post" name="form_3">
+                    <p align="left">镀膜机类型：
+                        <select style="width:180px;" name="coater">
+                            <option>GENER-1300</option>
+                            <option>OTFC-1300D/C</option>
+                            <option>OTFC-1300D(特)</option>
+                            <option>OTFC-1550D/C</option>
+                            <option>OTFC-1800D</option>
+                            <option>OTFC-1800C</option>
+                            <option>AR-1300D</option>
+                            <option>OTFC-900D</option>
+                            <option>OTFC-1100DA/CA</option>
+                            <option>OTFC-1100DB/CB</option>
+                            <option>OTFC-600C(S014)</option>
+                            <option>LED-600</option>
+                            <option>STAR-1300</option>
+                            <option>OTFC-2350</option>
+                            <option>MTFC-900CAI</option>
+                        </select>
+                    </p>
+                    <p align="left">请输入工番号:<input type="text" name="machineID" align="left"/></p>
+                    <input type="file" name="file" align="right" style="background-color: #FFFFFF"/>
+                    <input type="submit" value="上传" align="right"/>
+                </form>
+            </th>
+
+        </tr>
+    </table>
+</body>
+</html>
