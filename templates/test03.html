@@ -8,13 +8,16 @@
 <script src="../static/serial.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+{% if datas %}
     chartData = [];
     var i = 0;
     {%  for index in datas %}
         chartData.push({times:i,psk:{{index|safe}}})
         i++;
     {% endfor %}
-{#    {% if datas %}#}
+{% else %}
+       chartData = [{times:"0mins ",psk:0}]
+{% endif %}
 {#    chartData = [{times:"0mins",psk:{{datas[0]|safe}}},#}
 {#        {times:"1mins",psk:{{datas[1]|safe}}},#}
 {#        {times:"2mins",psk:{{datas[2]|safe}}},#}
@@ -37,9 +40,8 @@
 {#        {times:"19mins",psk:{{datas[19]|safe}}},#}
 {#        {times:"20mins",psk:{{datas[20]|safe}}},#}
 {#        ]#}
-{#    {% else %}#}
-{#        chartData = [{times:"0mins",psk:0}]#}
-{#    {% endif %}#}
+
+
 	AmCharts.makeChart("chartdiv",
         {
 	    type:"serial",
@@ -64,12 +66,12 @@
 <body background="../static/bkPhoto2.jpg">
 	<div id="chartdiv" style="width:100%;height:600px"></div>
     <hr style="height:3px;border:none;border-top:3px double red;" />
-    <h1 align="center" style="font-family: 'Times New Roman';color: darkred">Welcome to join Optorun Data Visualization Assistant</h1>
+    <a align="center" style="font-family: 'Times New Roman';color: darkred" href="index"><h1>Welcome to join Optorun Data Visualization Assistant</h1></a>
     <br>
 
     <form action="machine_no" method = 'post'>
         查看所有Machine No/装置番号：
-        <input type="submit" value="进入"/>
+        <input type="submit" value="查看"/>
     </form>
     <form action="mode_file" method = 'post'>
         下载excel模板文件：

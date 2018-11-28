@@ -7,11 +7,13 @@ app = Flask(__name__)
 @app.route('/index', methods=['GET', 'POST'])
 def index():        # 根目录,也就是主目录
     if request.method == 'GET':
-        leak_data = show_leakrate()
-        exhaust_data_nor = show_exhaust_nor()
-        exhaust_data_150 = show_exhaust_150()
-        print(leak_data[0],exhaust_data_nor,exhaust_data_150)
-        return render_template("test03.html", datas=leak_data[0])
+        # leak_data = show_leakrate()
+        # exhaust_data_nor = show_exhaust_nor()
+        # exhaust_data_150 = show_exhaust_150()
+        # print(leak_data[0],exhaust_data_nor,exhaust_data_150)
+        leakrate = 0
+
+        return render_template("test03.html", datas=leakrate)
 
 @app.route('/mode_1', methods=['POST'])
 def mode_1():
